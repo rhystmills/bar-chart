@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<title></title>
+			<link rel="stylesheet" href="">
+			<style>
+			/* ===  STANDARD ELEMENT STYLING  === */
+
+			body{
+			  font-family:"GuardianTextSansWeb";
+				/* font-family:arial; */
+			  font-size:9pt;
+			  box-sizing: border-box;
+			  margin: 0;
+			  border: 0;
+			  padding: 0;
+			  height:100%;
+			}
+			html{
+			  height:100%
+			}
+			table,th,tr,td{
+			  border-style: solid;
+			  border-width: 1px;
+			  border-color: #000;
+			  border-collapse: collapse;
+			}
+			td,th{
+			  padding:5px;
+			  background-color: #fff;
+			  margin:0px;
+			}
+			td.last{
+			  margin:0px;
+			}
+			th{
+			  background-color:#f9f9f9;
+			  text-align: left;
+			}
+			h1{
+			  margin:0px;
+			  margin-bottom:10px;
+			}
+			h2{
+			  margin:0px;
+			  margin-bottom:5px;
+			  padding-left:4px;
+			  font-size:1.1rem;
+			  color: #333;
+			}
+			p{
+			  padding: 5px;
+			  margin: 0px;
+			}
+
+			/*  ===  SPECIFIC ELEMENT ID's  === */
+
+			#bars{
+			  position: relative;
+			}
+			#tableContainer{
+			  /* margin-bottom: -4px; */
+			  display:flex;
+			}
+			#graphBox{
+			  display: block;
+			  /* height: 400px;
+			  width: 800px; */
+			  border:1px solid #aaa;
+			  border-top-style: none;
+			  border-right-style: none;
+			}
+			#dataEntryInput{
+				white-space: pre-wrap;
+			}
+
+			/*  ===  SPECIFIC ELEMENT CLASSES  === */
+
+			.graphArea{
+			  margin-top: 20px;
+			  display:inline-flex;
+			}
+			.dashboard{
+			  width: 100%;
+			  display: block;
+			  background-color: #f9f9f9;
+			  border-bottom: #aaa 1px solid;
+			  padding: 10px;
+			  margin: 0px;
+			  box-sizing: border-box;
+			  border-collapse: separate;
+			}
+			.bar{
+			  display: inline-block;
+			  /* background-color: #aaa; */
+			  text-align: center;
+			}
+			.upperBarSpacer{
+			  display: block;
+			}
+			.barColour{
+			  /* background-color: #2780f5; */
+			  width:35%;
+			  height:100%;
+			  display: inline-block;
+			}
+			.dataTable{
+			  display:inline-block;
+			}
+			.label{
+			  box-sizing: border-box;
+			  border-collapse: separate;
+			  height:100%;
+			  /* border:1px solid #000000; */
+			  display: inline-block;
+			  text-align: center;
+			  color: #333;
+			  margin-top: 5px;
+			}
+			.axisTitle{
+				/* box-sizing: border-box;
+				border-collapse: separate; */
+				height:100%;
+				font-size:0.8rem;
+				text-align: center;
+				font-style: italic;
+				color: #9e9e9e;
+				margin-top: 7px;
+			}
+			.yAxis{
+			  /* border-bottom-color: #aaa;
+			  border-bottom-width: 1px;
+			  border-bottom-style: solid; */
+			}
+			.ySection{
+			  height: 100%;
+			  flex-grow: 8;
+			  display: inline-block;
+			  /* border-width: 1px;
+			  border-style: solid; */
+			}
+			.rSection{
+			  height: 100%;
+			  flex-grow: 1;
+			  display: inline-block;
+			  /* border-width: 1px;
+			  border-style: solid; */
+			}
+			.increment{
+			  box-sizing: border-box;
+			  border-top-style:solid;
+			  border-color: #aaa;
+			  border-top-width:1px;
+			}
+			.yLabel{
+			  text-align:end;
+			  position: relative;
+			  top: -7px;
+			  padding-right:4px;
+			}
+			.graphLines{
+			  position:absolute;
+			  z-index: -10;
+			}
+			.graphLine{
+			  box-sizing: border-box;
+			  border-top-color: #ddd;
+			  border-top-style: solid;
+			  border-top-width: 1px;
+			}
+
+			/* Metric and Dimension Styling */
+
+			.dataNode{
+			  display: block;
+			  border-radius: 4px;
+			  border-width: 1px;
+			  border-style: solid;
+			  border-color: #aaa;
+			  box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.2);
+			  margin: 4px;
+			  padding: 2px;
+			  cursor: pointer;
+			}
+			.dataNode:hover{
+			  background-color: #fafafa;
+			  box shadow: 3px 1px 5px rgba(0, 0, 0, 0.4);
+			}
+			.dataNode:active{
+			  background-color: #efefef;
+			  box shadow: 1px 0px 1px rgba(0, 0, 0, 0.2);
+			}
+
+			/* Form Styling */
+
+			.controlFormInput{
+			  display: block;
+			  border-radius: 1px;
+			  border-width: 1px;
+			  border-style: solid;
+			  border-color: #2780f5;
+			  /* box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.2); */
+			  margin: 4px;
+			  padding: 2px;
+			  cursor: pointer;
+			  min-height: 10px;
+			  background-color: #fff;
+			}
+			.hiddenButton{
+			  border:0;
+			  padding:0;
+			  font-size:0
+			}
+
+			/*  ===  STANDARD STYLING CLASSES  === */
+
+			/* Display classes */
+
+			.block{
+			  display:block;
+			}
+			.inlineBlock{
+			  display:inline-block;
+			}
+			.flex{
+			  display: flex;
+			}
+
+			/* Size */
+
+			.fullWidth{
+			  box-sizing: border-box;
+			  width: 100%;
+			}
+			.minWidth{
+			  box-sizing: border-box;
+			  min-width: 150px;
+			  /* height: 100%; */
+			}
+			.fullHeight{
+			  top: 0px;
+			  bottom: 0px;
+			}
+			.minZero{
+			  min-width:0px;
+			}
+
+			/* Position */
+
+			.absolute{
+			  position: absolute;
+			}
+			.relative{
+			  position: relative;
+			}
+			.topBottom{
+				top: 50%;
+				bottom: 50%;
+			}
+
+			/* Colour */
+
+			.aaaBorder{
+			  border: #aaa 1px solid;
+			}
+			.white{
+			  background-color: #fff;
+			}
+
+			/* Margin, border, padding */
+
+			.marginOne{
+			  margin: 1px;
+			}
+			.horiMar{
+			  margin-left: 5px;
+			}
+
+			/* Flex */
+
+			.flexColumn{
+			  flex-direction:column;
+			}
+			.flexRow{
+			  flex-direction:row;
+			}
+			.flexGrow{
+			  flex-grow: 1;
+			  flex-basis: 5px;
+			}
+			.flexGrowTwo{
+			  flex-grow: 2;
+			  flex-basis: 5px;
+			}
+			.darkBorder{
+				border-color: #2780f5;
+			}
+
+			/* Text */
+			.verticalText{
+				transform: rotate(-90deg);
+			}
+			.lineHeightZero{
+				line-height: 0px;
+				padding-top: 0px;
+				margin-top: 0px;
+			}
+
+			</style>
+      <script type="text/javascript">
+
+      </script>
+	</head>
+<body>
+	<section class="dashboard" id="dashboard">
+		<h1>Data</h1>
+		<div class="flex fullWidth relative">
+
+			<!-- Data table -->
+			<div class="dataTable flex" id="tableSection">
+				<div class="inlineBlock" id="tableContainer"></div>
+				<div class="inlineBlock" id="dashboard"></div>
+			</div>
+
+			<!-- Metrics -->
+			<div class="wrapper flex flexColumn inlineBlock horiMar minWidth">
+				<h2 class="block">Metrics</h2>
+				<div class="flex white minWidth flexGrow flexColumn aaaBorder" id="metrics"></div>
+			</div>
+
+			<!-- Dimensions -->
+			<div class="wrapper flex flexColumn inlineBlock horiMar minWidth">
+				<h2 class="block">Dimensions</h2>
+				<div class="flex white minWidth flexGrow flexColumn aaaBorder" id="dimensions"></div>
+			</div>
+
+			<!-- Graph Controls -->
+			<div class="wrapper flex flexColumn inlineBlock horiMar minWidth">
+				<h2 class="block">Controls</h2>
+				<div class="marginOne" id="controls">
+					<form method="post" name="commandForm" id="commandForm" class="flex flexRow minWidth">
+						<p class="inlineBlock minZero flexGrow">Graph colour: </p>
+						<input type="text" name="commandBox" autocomplete="off" class="controlFormInput inlineBlock minZero flexGrowTwo" id="controlFormInput">
+						<input type="submit" name="submitButton" class="hiddenButton">
+					</form>
+					<form method="post" name="commandForm" id="widthForm" class="flex">
+						<p class="inlineBlock minZero flexGrow">Width: </p>
+						<input type="text" name="commandBox" autocomplete="off" class="controlFormInput inlineBlock minZero flexGrowTwo" id="widthFormInput">
+						<input type="submit" name="submitButton" class="hiddenButton">
+					</form>
+					<form method="post" name="commandForm" id="heightForm" class="flex">
+						<p class="inlineBlock minZero flexGrow">Height: </p>
+						<input type="text" name="commandBox" autocomplete="off" class="controlFormInput inlineBlock minZero flexGrowTwo" id="heightFormInput">
+						<input type="submit" name="submitButton" class="hiddenButton">
+					</form>
+				</div>
+			</div>
+
+			<!-- Data entry -->
+			<div class="wrapper flex flexColumn inlineBlock horiMar minWidth">
+				<h2 class="block">Data entry:</h2>
+				<form method="post" name="commandForm" id="dataEntry" class="flex">
+					<textarea name="commandBox" class="controlFormInput inlineBlock minZero flexGrowTwo" form="dataEntry" id="dataEntryInput"></textarea>
+					<input type="submit" name="submitButton">
+				</form>
+			</div>
+
+
+			<!-- <div class="wrapper flex flexColumn inlineBlock horiMar minWidth">
+				<div class="flex white minWidth flexGrow flexColumn aaaBorder"></div>
+			</div> -->
+		</div>
+	</section>
+	<section class="graphArea" id="graphSection">
+		<div id="graphBox"></div>
+	</section>
+
+<script type="text/javascript">
+window.onload = function(){
+	// var para = document.createElement('p');
+	// var node = document.createTextNode('Table.');
+	// para.appendChild(node);
+	let theData = MOUNTAINS;
+	let bod = document.getElementsByTagName('body')[0];
+	// bod.appendChild(para);
+	let tableSection = document.getElementById('tableContainer');
+	tableSection.appendChild(createTable(theData));
+	// console.log(findNumberColumn(theData));
+	// console.log(highestNumber(numberColumn));
+	// console.log(roundNumber(highestNumber(numberColumn)));
+	// console.log("Rows: "+numRows(theData));
+	// console.log(dataStats.proportion());
+	let graphBox=document.getElementById("graphBox");
+	graphBox.appendChild(drawGraph(theData));
+	graphBox.setAttribute("style","height: "+graphParameters.height+"px; width:"+ graphParameters.width+"px");
+	let graphSection=document.getElementById("graphSection");
+	graphBox.appendChild(xAxis(theData));
+	graphSection.prepend(yAxis(theData));
+
+	console.log(dataStats.increment);
+	console.log(dataStats.countIncrements);
+	displayNumColumns(findNumberColumn(theData,true));
+	displayDimensionColumns(findDimensionColumn(theData,true));
+}
+
+
+
+const MOUNTAINS = [
+	{name: "Kilimanjaro", height: 5895, place: "Tanzania", "rel Height": 10},
+	{name: "Everest", height: 8748, place: "Nepal", "rel Height": 10},
+	{name: "Mount Fuji", height: 3776, place: "Japan", "rel Height": 15},
+	{name: "Vaalserberg", height: 323, place: "Netherlands", "rel Height": 9},
+	{name: "Denali", height: 6168, place: "United States", "rel Height": 2},
+	{name: "Popocatepetl", height: 5465, place: "Mexico", "rel Height": 8},
+	{name: "Mont Blanc", height: 4808, place: "Italy/France", "rel Height": 4}
+];
+
+const regexNum = /\d+/;
+const regexLetter = /([a-z]+|[A-Z]+)/
+
+let theData = MOUNTAINS;
+
+// ---------------------- //
+// DATASTATS OBJECT
+// An object of metadata about the data currently being used in the graph. This must be updated in order to change metrics/dimensions in the graph
+
+let dataStats = {};
+dataStats.numRows = numRows(theData);
+dataStats.topPoint = (roundNumber(highestNumber(findNumberColumn(theData))));
+dataStats.values = findNumberColumn(theData);
+dataStats.curMetric = sentenceCase(Object.keys(theData[0])[(findNumberColumn(theData, true)).keys[0]]);
+console.log(dataStats.curMetric);
+dataStats.proportion = function () {
+	proportionArray=[];
+	console.log(this.values.length)
+	for(i=0;i<this.values.length;i++){
+		proportionArray.push((this.values[i])/this.topPoint);
+	}
+	return proportionArray;
+}
+dataStats.dimension = findDimensionColumn(theData);
+dataStats.curDimension = sentenceCase(Object.keys(theData[0])[(findDimensionColumn(theData, true)).keys[0]]);
+console.log((findDimensionColumn(theData, true)).keys[0]);
+//yAxis increments
+dataStats.increment = findIncrements(dataStats.topPoint);
+dataStats.countIncrements = (dataStats.topPoint/dataStats.increment);
+dataStats.keys = Object.keys(theData[0]);
+
+dataStats.refreshCalcValues = function () {
+	dataStats.numRows = numRows(theData);
+	dataStats.topPoint = (roundNumber(highestNumber(findNumberColumn(theData))));
+	dataStats.values = findNumberColumn(theData);
+	dataStats.curMetric = sentenceCase(Object.keys(theData[0])[(findNumberColumn(theData, true)).keys[0]]);
+	dataStats.proportion = function () {
+		proportionArray=[];
+		console.log(this.values.length)
+		for(i=0;i<this.values.length;i++){
+			proportionArray.push((this.values[i])/this.topPoint);
+		}
+		return proportionArray;
+	}
+	dataStats.dimension = findDimensionColumn(theData);
+	dataStats.curDimension = sentenceCase(Object.keys(theData[0])[(findDimensionColumn(theData, true)).keys[0]]);
+	//yAxis increments
+	dataStats.increment = findIncrements(dataStats.topPoint);
+	dataStats.countIncrements = (dataStats.topPoint/dataStats.increment);
+	dataStats.keys = Object.keys(theData[0]);
+}
+
+//-----------------------//
+
+let graphParameters = {};
+graphParameters.width=800;
+graphParameters.height=400;
+graphParameters.graphColourPrimary="#2780f5";
+
+let controlFormInput=document.getElementById("controlFormInput");
+controlFormInput.setAttribute("placeholder",graphParameters.graphColourPrimary);
+
+//-------------------------------------//
+// TABLE TO JSON OBJECT
+// An object holding functions relating to converting a string pasted from a spreadsheet to a readable JSON object
+
+let tableToJson = {};
+tableToJson.convertTable = function (string) {
+	// ---- 1. Create an array of arrays from the table ---- //
+
+	//Create an array (masterArray). Add another array (we will call this curArray)
+	//Start a new value and end at the first tab. Add that value to the curArray
+	//Repeat until you hit a return.
+	//When you find a return, add a new subArray to the masterArray.
+	// - Returns three dimensional array of rows of data
+
+	function stringToTable(string){
+		let totalArray=[];
+		let curArray=[];
+		let curString="";
+		console.log("Inside stringToTable")
+		for (i=0;i<=string.length;i++){
+			if (string[i]===`	`){
+				curArray.push(curString);
+				console.log("Tab found, word is " + curString);
+				curString="";
+			}
+			else if (i===(string.length-1) && string[i]===`\n`){
+				// curArray.push(curString);
+				totalArray.push(curArray);
+				// curArray=[];
+				return(totalArray);
+			}
+			else if (i===string.length){
+				curArray.push(curString);
+				totalArray.push(curArray);
+				curArray=[];
+				return(totalArray);
+			}
+			else if (string[i]===`\n`){
+				curArray.push(curString);
+				totalArray.push(curArray);
+				console.log("New line found, word is "+curString+", line is "+curArray);
+				curString="";
+				curArray=[];
+			}
+			else {
+				curString+=string[i];
+			}
+		}
+	}
+
+
+
+	// ---- 2. Create a JSON object from the array of arrays.
+
+	//Create an array(json)
+	//Create an object.
+	//Start with the second array from step 1's masterArray
+	//For each item in the subArray, add a property to subObject1:
+	//Its value will be masterArray(subArray2[i])
+	//Its name will be the value in masterArray(subArray1[i])
+	//Do this for each array.
+
+	function convertTableToJson(array){
+		let json=[];
+		let curObject={};
+
+		for (i=1; i<array.length; i++){
+			for (j=0; j<array[0].length; j++){
+				curObject[array[0][j]]=array[i][j];
+			}
+			json.push(curObject);
+			curObject={};
+		}
+		return json;
+
+	}
+
+	return convertTableToJson(stringToTable(string));
+}
+// let jam = tableToJson.convertTable(`Thing	Nombre	Thang	Numbo
+// Cheese	50	Chow	450
+// Hat	6	Wow	223
+// Fox	30	Pow	900
+// Manuel	22	How?	25`);
+// console.log(jam);
+
+
+
+// -- NEXT
+
+// Add this data set as a chooseable option like metrics and dimensions
+
+// Set theData to this input when the set is chosen
+
+//-------------------------------------//
+
+// --- Function to turn a data object in JSON format into an HTML table --- //
+
+function createTable(dataObject){
+	let table=document.createElement('table');
+	let headerRow=document.createElement('tr');
+	table.appendChild(headerRow)
+// Create array of property names in first row of object
+	let allProperties=Object.keys(dataObject[0]);
+// Create the header row with column headers based on the property names in the first row of the data
+	for(i=0;i<allProperties.length;i++){
+		let currentProperty=document.createElement('th');
+		let headerText=document.createTextNode(sentenceCase(allProperties[i]));
+		let upperHeaderText=0;
+		currentProperty.appendChild(headerText);
+		headerRow.appendChild(currentProperty);
+	}
+//Create and fill the data cells
+	for(j=0;j<dataObject.length;j++){
+		let currentRow=document.createElement('tr');
+		for(k=0;k<Object.keys(dataObject[j]).length;k++){
+			let value=dataObject[j][Object.keys(dataObject[j])[k]];
+			let dataCell=document.createElement('td');
+			let dataValue=document.createTextNode(value);
+			dataCell.appendChild(dataValue);
+			currentRow.appendChild(dataCell);
+		}
+		table.appendChild(currentRow);
+	}
+	return table;
+}
+
+function refreshTable(){
+	let tableSection = document.getElementById('tableContainer');
+	while (tableSection.hasChildNodes()){
+		tableSection.removeChild(tableSection.childNodes[0]);
+	}
+	tableSection.appendChild(createTable(theData));
+}
+
+// --- Graph Drawing function ---//
+
+function refreshGraph(){
+	while (graphSection.hasChildNodes()){
+		graphSection.removeChild(graphSection.childNodes[0]);
+	}
+	let graphBox=document.createElement("div");
+	graphBox.setAttribute("id","graphBox");
+	graphSection.appendChild(graphBox);
+
+	graphBox.appendChild(drawGraph(theData));
+	graphBox.setAttribute("style","height: "+graphParameters.height+"px; width:"+ graphParameters.width+"px");
+	graphBox.appendChild(xAxis(theData));
+	graphSection.prepend(yAxis(theData));
+}
+
+function refreshDataNodes(){
+	let metrics=document.getElementById("metrics");
+	let dimensions=document.getElementById("dimensions");
+
+	while (metrics.hasChildNodes()){
+		metrics.removeChild(metrics.childNodes[0]);
+	}
+	while (dimensions.hasChildNodes()){
+		dimensions.removeChild(dimensions.childNodes[0]);
+	}
+	displayNumColumns(findNumberColumn(theData,true));
+	displayDimensionColumns(findDimensionColumn(theData,true));
+}
+
+function drawGraph(dataObject){
+	let bars=document.createElement('div');
+	bars.setAttribute("id","bars");
+
+	let proportions=dataStats.proportion();
+
+	let upperBarSpacer = document.createElement('div');
+	upperBarSpacer.setAttribute("style","height: "+ (graphParameters.height-(graphParameters.height*highestNumber(dataStats.proportion()))+"px"));
+	bars.appendChild(upperBarSpacer);
+
+	for (i=0;i<dataStats.numRows;i++){
+		//Create bar container 'bar'
+		let bar=document.createElement('div');
+		bar.setAttribute("class","bar");
+
+		//Define height and width of bars, then the style attribute
+		let height = (graphParameters.height*proportions[i]+"px");
+		let width= (graphParameters.width/dataStats.numRows) +"px";
+		let style= "height: " + height + "; width: " + width +";";
+		bar.setAttribute("style",style);
+		bars.appendChild(bar);
+
+		//Create the coloured bar within the bar container
+		let barColour=document.createElement('div');
+		barColour.setAttribute("class","barColour");
+		barColour.setAttribute("style","background-color: "+graphParameters.graphColourPrimary);
+		bar.appendChild(barColour);
+	}
+
+	let graphLines = elementWithClass('div','graphLines');
+	graphLines.setAttribute("style","top:"+(0)+"px");
+
+	//Graph Lines
+	for (i=0; i<dataStats.countIncrements; i++){
+		let increment = elementWithClass('div','graphLine');
+		let height=((graphParameters.height/dataStats.topPoint)*dataStats.increment);
+		let width = graphParameters.width;
+		increment.setAttribute("style","height:"+height+"px; width:"+width+"px");
+		graphLines.appendChild(increment);
+	}
+
+	bars.appendChild(graphLines);
+	return bars;
+}
+
+function xAxis(dataObject){
+	let xAxis = document.createElement('div');
+	xAxis.setAttribute("class","block fullWidth");
+	xAxis.setAttribute("id","xAxis");
+	let labelRow = document.createElement('div');
+	labelRow.setAttribute("id","labelRow");
+	labelRow.setAttribute("class","block fullWidth")
+	for (i=0;i<dataStats.numRows;i++){
+		let label = document.createElement('div');
+		label.setAttribute("class","label");
+
+		let width = (graphParameters.width/dataStats.numRows) +"px";
+		label.setAttribute("style","width: " + width);
+
+		let labelText = document.createTextNode(dataStats.dimension[i]);
+
+		label.appendChild(labelText);
+		labelRow.appendChild(label);
+	}
+	xAxis.appendChild(labelRow);
+
+	let xAxisTitle = document.createElement('div');
+	let xAxisTitleText = document.createTextNode(dataStats.curDimension);
+	xAxisTitle.setAttribute("class","axisTitle fullWidth block");
+	xAxisTitle.appendChild(xAxisTitleText);
+	xAxis.appendChild(xAxisTitle);
+	return xAxis;
+}
+	console.log("dimension: "+dataStats.dimension);
+
+function yAxis(dataObject){
+	let yAxis = document.createElement('div');
+	yAxis.setAttribute("class","yAxis");
+	yAxis.setAttribute("id","yAxis");
+
+	//Set style
+	let width= "80px";
+	let height= graphParameters.height + "px";
+	let style= "height: " + height + "; width: " + width +";" +"display: flex";
+	yAxis.setAttribute("style",style);
+
+	//Split in three
+	let yAxisTitle = elementWithClass('div','relative axisTitle')
+	let yAxisPara = elementWithClass('p','inline absolute verticalText lineHeightZero topBottom')
+	yAxisTitle.appendChild(yAxisPara);
+
+	let leftSection = elementWithClass('div','ySection');
+	let rightSection = elementWithClass('div','rSection');
+
+	yAxisPara.appendChild(document.createTextNode(dataStats.curMetric));
+
+	//Create increments for right section
+	for (i=0; i<=dataStats.countIncrements; i++){
+		let increment = elementWithClass('div','increment');
+		let height=((graphParameters.height/dataStats.topPoint)*dataStats.increment);
+		increment.setAttribute("style","height:"+height+"px");
+		rightSection.appendChild(increment);
+	}
+	//Create increments for left section
+	for (i=0; i<=dataStats.countIncrements; i++){
+		let increment = elementWithClass('div','yLabel');
+		let height=((graphParameters.height/dataStats.topPoint)*dataStats.increment);
+		increment.setAttribute("style","height:"+height+"px");
+		leftSection.appendChild(increment);
+
+		//Add y Axis labels
+		let curInc=dataStats.increment*(dataStats.countIncrements-i);
+		let text=document.createTextNode(curInc);
+		increment.appendChild(text);
+	}
+
+	yAxis.appendChild(yAxisTitle);
+	yAxis.appendChild(leftSection);
+	yAxis.appendChild(rightSection);
+	return yAxis;
+}
+
+function findIncrements(num){
+	let logPower=(Math.ceil(Math.log10(num)));
+	let largeNum=Math.pow(10,logPower);
+	let digitOne = parseInt(num.toString().charAt(0));
+	if (digitOne>5){
+		return largeNum/10;
+	}
+	if (digitOne>2 && digitOne<=5){
+		return largeNum/20;
+	}
+	if (digitOne>1 && digitOne<=2){
+		return largeNum/50;
+	}
+	if (digitOne <= 1){
+		return largeNum/100;
+	}
+}
+
+//Create dashboard
+
+function displayNumColumns(object){
+	let metrics=document.getElementById("metrics");
+
+	for (i=0; i<object.keys.length; i++){
+		let currentKey=object.keys[i];
+		let element = document.createElement('a');
+		if (i===0){
+			element.setAttribute("class","dataNode metricNode darkBorder");
+		}
+		else {
+			element.setAttribute("class","dataNode metricNode");
+		}
+		console.log(sentenceCase(dataStats.keys[currentKey]));
+		let text = document.createTextNode((sentenceCase(dataStats.keys[currentKey])))
+
+		element.appendChild(text);
+		element.setAttribute("data-key",object.keys[i]);
+		element.setAttribute("data-ref",i);
+
+		element.addEventListener("click",function(){
+			let nodeElements = document.getElementsByClassName("metricNode");
+			for (node of nodeElements){
+				node.setAttribute("class","dataNode metricNode");
+			}
+			element.setAttribute("class","dataNode metricNode darkBorder");
+			console.log(element.dataset.ref);
+			console.log(object.numColumns[element.dataset.ref]);
+
+			//set relevant data
+			dataStats.values=object.numColumns[element.dataset.ref];
+			dataStats.topPoint = (roundNumber(highestNumber(object.numColumns[element.dataset.ref])));
+			dataStats.increment = findIncrements(dataStats.topPoint);
+			dataStats.countIncrements = (dataStats.topPoint/dataStats.increment);
+
+			console.log(dataStats);
+
+			//redraw y axis
+			let theYAxis=document.getElementById("yAxis");
+			theYAxis.parentNode.removeChild(theYAxis);
+			graphSection.prepend(yAxis(theData));
+
+			//redraw bars
+			let theBars=document.getElementById("bars");
+			theBars.parentNode.removeChild(theBars);
+			graphBox.prepend(drawGraph(theData));
+		});
+
+		metrics.appendChild(element);
+	}
+}
+
+//  !! These two could be easily refactored into a single function !!  //
+
+function displayDimensionColumns(object){
+	let dimensions=document.getElementById("dimensions");
+
+	for (i=0; i<object.keys.length; i++) {
+		let currentKey=object.keys[i];
+		let element = document.createElement('a');
+		if (i===0){
+			element.setAttribute("class","dataNode dimensionNode darkBorder");
+		}
+		else {
+			element.setAttribute("class","dataNode dimensionNode");
+		}
+		console.log(sentenceCase(dataStats.keys[currentKey]));
+		let text = document.createTextNode((sentenceCase(dataStats.keys[currentKey])))
+		element.appendChild(text);
+		element.setAttribute("data-key",object.keys[i])
+
+		element.addEventListener("click",function(){
+			let nodeElements = document.getElementsByClassName("dimensionNode");
+			for (node of nodeElements){
+				node.setAttribute("class","dataNode dimensionNode");
+			}
+			element.setAttribute("class","dataNode dimensionNode darkBorder");
+
+			console.log(object.numColumns[element.dataset.key]);
+			dataStats.dimension=object.numColumns[element.dataset.key];
+
+			console.log(sentenceCase(Object.keys(theData[0])[currentKey]));
+
+			dataStats.curDimension=sentenceCase(Object.keys(theData[0])[currentKey]);
+			let theXAxis=document.getElementById("xAxis");
+			theXAxis.parentNode.removeChild(theXAxis);
+			graphBox.appendChild(xAxis(theData));
+		});
+
+		dimensions.appendChild(element);
+	}
+}
+
+ // --- UTILITY FUNCTIONS --- //
+
+ // --- Function to return the column with numbers in it --- //
+
+
+	//Convert string to sentence case
+
+	function sentenceCase(string){
+		let newText = "";
+		for(j=0;j<string.length;j++){
+			if(j===0){
+				newText=newText+string[j].toUpperCase();
+			}
+			else{
+				newText=newText+string[j].toLowerCase();
+			}
+		}
+		return newText;
+	}
+
+	function findDimensionColumn(dataObject, boolean){
+		//Optional boolean, returns an object of dimension-column values and keys
+		let allProperties=Object.keys(dataObject[0]);
+		let metaObj={};
+		let metaNumColumn=[];
+		let metaKeys=[];
+
+		for (i=0;i<allProperties.length;i++){
+			//The below is a bit of a fudge, I'm not sure where the extra brackets were coming from, so it's greater than one now
+			if (i>1) {
+				metaNumColumn.push([]);
+			}
+			if(regexLetter.test(dataObject[0][allProperties[i]])){
+				metaKeys.push(i);
+				let dimensionColumn = [];
+				for (j=0;j<dataObject.length;j++){
+					dimensionColumn.push(dataObject[j][allProperties[i]]);
+				}
+				if (!boolean){
+					return dimensionColumn;
+				}
+				metaNumColumn.push(dimensionColumn);
+			}
+		}
+		metaObj.numColumns=metaNumColumn;
+		metaObj.keys=metaKeys;
+		return metaObj;
+	}
+
+	//  !! These two could be refactored into a single function !!  //
+
+	function findNumberColumn(dataObject, boolean){
+		//Optional boolean, returns an object of number-column values and keys
+		let allProperties=Object.keys(dataObject[0]);
+		let metaObj={}
+		let metaNumColumn=[];
+		let metaKeys=[];
+
+		for (i=0;i<allProperties.length;i++){
+			if(regexNum.test(dataObject[0][allProperties[i]]) && !regexLetter.test(dataObject[0][allProperties[i]])){
+				metaKeys.push(i);
+				let numColumn = [];
+				for (j=0;j<dataObject.length;j++){
+					numColumn.push(dataObject[j][allProperties[i]]);
+				}
+				if (!boolean){
+					return numColumn;
+				}
+				metaNumColumn.push(numColumn);
+			}
+		}
+		metaObj.numColumns=metaNumColumn;
+		metaObj.keys=metaKeys;
+		console.log(metaObj);
+		return metaObj;
+	}
+	let numberColumn = findNumberColumn(theData);
+
+	function highestNumber(array){
+		return Math.max(...array);
+	}
+
+	function roundNumber(num){
+		let numAsInt=Math.ceil(num);
+		let digits=numAsInt.toString().length;
+		let digitOne = parseInt(numAsInt.toString().charAt(0));
+		let digitTwo = parseInt(numAsInt.toString().charAt(1));
+		let roundedNum = "";
+		console.log(numAsInt);
+		console.log(digits);
+
+		roundedNum+=(digitOne+1);
+		for(i=1;i<digits;i++){
+			roundedNum+="0"
+		}
+
+		console.log(parseInt(roundedNum));
+		return parseInt(roundedNum);
+	}
+
+ function numRows(dataObject){
+	 return dataObject.length;
+ }
+
+ //Function to create an element with a given class
+
+ let elementWithClass = function(type, elementClass){
+	 let element = document.createElement(type);
+	 element.setAttribute("class",elementClass)
+	 return element;
+ }
+
+
+//COLOUR Form
+
+// Initiate form variable on window load
+let commandForm = document.getElementById('commandForm');
+let widthForm = document.getElementById('widthForm');
+let heightForm = document.getElementById('heightForm');
+
+function commandInit(){
+	commandForm.onsubmit=submitForm;
+	widthForm.onsubmit=submitForm;
+	heightForm.onsubmit=submitForm;
+	dataEntry.onsubmit=submitForm;
+	console.log("init");
+ }
+window.addEventListener("load", commandInit);
+window.addEventListener("load", commandInit);
+
+//Catch the form before it refreshes the page
+function submitForm(event){
+	console.log(event.srcElement.id);
+	// console.log(commandForm["commandBox"].value);
+	if (event.srcElement.id==="commandForm"){
+		graphParameters.graphColourPrimary = commandForm["commandBox"].value;
+		controlFormInput.setAttribute("placeholder",graphParameters.graphColourPrimary);
+	}
+	if (event.srcElement.id==="widthForm"){
+		graphParameters.width = widthForm["commandBox"].value;
+		// widthFormInput.setAttribute("placeholder",graphParameters.width+"px");
+	}
+	if (event.srcElement.id==="heightForm"){
+		graphParameters.height = heightForm["commandBox"].value;
+		// widthFormInput.setAttribute("placeholder",graphParameters.width+"px");
+	}
+	if (event.srcElement.id==="dataEntry"){
+		console.log(event);
+		let string = dataEntry["commandBox"].value;
+		console.log(string);
+		let json = tableToJson.convertTable(string);
+
+		console.log(json);
+
+		// let jamjam = tableToJson.convertTable(`Thing	Nombre	Thang	Numbo
+		// Cheese	50	Chow	450
+		// Hat	6	Wow	223
+		// Fox	30	Pow	900
+		// Manuel	22	How?	25`);
+		// console.log(jamjam);
+
+		theData = tableToJson.convertTable(dataEntry["commandBox"].value);
+		dataStats.refreshCalcValues();
+		refreshGraph();
+		refreshDataNodes();
+		refreshTable();
+
+		commandForm.reset();
+		event.preventDefault();
+		return;
+		widthFormInput.setAttribute("placeholder",graphParameters.width+"px");
+		console.log(theData)
+	}
+	refreshGraph();
+	commandForm.reset();
+	event.preventDefault();
+}
+
+
+</script>
+	</body>
+</html>
